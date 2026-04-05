@@ -1,11 +1,9 @@
 <?php
 require "connect.php";
 
-// 1. ดึงข้อมูลลูกค้า (แสดงคนล่าสุดขึ้นก่อน)
 $sql_customers = "SELECT * FROM customers ORDER BY customer_id DESC";
 $res_customers = mysqli_query($conn, $sql_customers);
 
-// 2. ดึงข้อมูลเครื่อง (ใช้ LEFT JOIN เพื่อให้โชว์แม้ยังไม่ได้ตั้งค่าประเภทเครื่อง)
 $sql_machines = "SELECT m.*, mt.type_name 
                  FROM machines m 
                  LEFT JOIN machine_types mt ON m.machine_type_id = mt.machine_type_id 
