@@ -1,16 +1,21 @@
+<?php 
+  // ตรงนี้สามารถใส่โค้ด PHP เช่น เช็กการ Login หรือดึงข้อมูลจาก DB ได้
+  $page_title = "เพิ่มรายชื่อลูกค้าใหม่"; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>เพิ่มรายชื่อลูกค้าใหม่</title>
-</head>
+    <title><?php echo $page_title; ?></title> </head>
 <body>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-primary text-white"><h4>เพิ่มรายชื่อลูกค้าใหม่</h4></div>
+                <div class="card-header bg-primary text-white">
+                    <h4><?php echo $page_title; ?></h4>
+                </div>
                 <div class="card-body">
                     <form action="add_customer_db.php" method="POST">
                         <div class="mb-3">
