@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2026 at 07:29 AM
+-- Generation Time: Apr 05, 2026 at 05:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `comq_booking_db`
 --
-CREATE Database comq_booking_db CHARACTER SET utf8 COLLATE utf8_general_ci;
-Use comq_booking_db;
 
 -- --------------------------------------------------------
 
@@ -29,22 +27,21 @@ Use comq_booking_db;
 -- Table structure for table `customers`
 --
 
-
 CREATE TABLE `customers` (
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(20) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`customer_id`, `first_name`, `last_name`, `phone`, `email`) VALUES
-(1, 'สมชาย', 'สายเกมเมอร์', '0812345678', 'somchai.g@email.com'),
-(2, 'มานี', 'รักเรียน', '0898765432', 'manee.study@email.com');
+(1, 'siwar', 'runkunyong', '0643509323', 'test@test'),
+(2, 'test', 'test', '06435093123', 'test@test2');
 
 -- --------------------------------------------------------
 
@@ -57,15 +54,15 @@ CREATE TABLE `machines` (
   `machine_number` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `machine_type_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `machines`
 --
 
 INSERT INTO `machines` (`machine_id`, `machine_number`, `status`, `machine_type_id`) VALUES
-(1, 'A01', 'Available', 1),
-(2, 'B05', 'Available', 2);
+(1, 'A01', 'Busy', 1),
+(2, 'B05', 'Busy', 2);
 
 -- --------------------------------------------------------
 
@@ -77,7 +74,7 @@ CREATE TABLE `machine_types` (
   `machine_type_id` int(11) NOT NULL,
   `type_name` varchar(100) NOT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `machine_types`
@@ -94,20 +91,20 @@ INSERT INTO `machine_types` (`machine_type_id`, `type_name`, `description`) VALU
 --
 
 CREATE TABLE `payments` (
-  `payment_id` int(11) NOT NULL,
+  `payment_id` int(20) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `payment_method` varchar(50) DEFAULT NULL,
   `payment_date` datetime NOT NULL,
   `usage_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `payments`
 --
 
 INSERT INTO `payments` (`payment_id`, `amount`, `payment_method`, `payment_date`, `usage_id`) VALUES
-(1, 100.00, 'Cash', '2026-04-04 15:05:00', 1),
-(2, 30.00, 'Thai QR', '2026-04-04 11:35:00', 2);
+(1, 50.00, 'Cash', '2026-04-04 21:16:44', 1),
+(2, 100.00, 'Cash', '2026-04-04 21:18:27', 2);
 
 -- --------------------------------------------------------
 
@@ -116,22 +113,22 @@ INSERT INTO `payments` (`payment_id`, `amount`, `payment_method`, `payment_date`
 --
 
 CREATE TABLE `reservations` (
-  `reservation_id` int(11) NOT NULL,
+  `reservation_id` int(20) NOT NULL,
   `reservation_date` date NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `status` varchar(50) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
+  `customer_id` int(20) DEFAULT NULL,
   `machine_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `reservations`
 --
 
 INSERT INTO `reservations` (`reservation_id`, `reservation_date`, `start_time`, `end_time`, `status`, `customer_id`, `machine_id`) VALUES
-(1, '2026-04-04', '13:00:00', '15:00:00', 'Completed', 1, 1),
-(2, '2026-04-04', '10:00:00', '11:30:00', 'Completed', 2, 2);
+(1, '2026-04-04', '13:00:00', '14:10:00', 'Completed', 1, 1),
+(2, '2026-04-04', '22:20:00', '12:20:00', 'Completed', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -140,20 +137,20 @@ INSERT INTO `reservations` (`reservation_id`, `reservation_date`, `start_time`, 
 --
 
 CREATE TABLE `usages` (
-  `usage_id` int(11) NOT NULL,
+  `usage_id` int(20) NOT NULL,
   `start_time` datetime NOT NULL,
-  `end_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT current_timestamp(),
   `hours_used` decimal(5,2) DEFAULT NULL,
   `reservation_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `usages`
 --
 
 INSERT INTO `usages` (`usage_id`, `start_time`, `end_time`, `hours_used`, `reservation_id`) VALUES
-(1, '2026-04-04 13:00:00', '2026-04-04 15:00:00', 2.00, 1),
-(2, '2026-04-04 10:00:00', '2026-04-04 11:30:00', 1.50, 2);
+(1, '2026-04-04 13:00:00', '2026-04-04 14:10:00', 1.17, 1),
+(2, '2026-04-04 22:20:00', '2026-04-04 12:20:00', -10.00, 2);
 
 --
 -- Indexes for dumped tables
@@ -170,7 +167,7 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `machines`
   ADD PRIMARY KEY (`machine_id`),
-  ADD KEY `machine_type_id` (`machine_type_id`);
+  ADD KEY `machines_ibfk_1` (`machine_type_id`);
 
 --
 -- Indexes for table `machine_types`
@@ -208,7 +205,7 @@ ALTER TABLE `usages`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `machines`
@@ -226,19 +223,19 @@ ALTER TABLE `machine_types`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `payment_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `reservation_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `usages`
 --
 ALTER TABLE `usages`
-  MODIFY `usage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `usage_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -249,25 +246,6 @@ ALTER TABLE `usages`
 --
 ALTER TABLE `machines`
   ADD CONSTRAINT `machines_ibfk_1` FOREIGN KEY (`machine_type_id`) REFERENCES `machine_types` (`machine_type_id`);
-
---
--- Constraints for table `payments`
---
-ALTER TABLE `payments`
-  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`usage_id`) REFERENCES `usages` (`usage_id`);
-
---
--- Constraints for table `reservations`
---
-ALTER TABLE `reservations`
-  ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-  ADD CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`machine_id`);
-
---
--- Constraints for table `usages`
---
-ALTER TABLE `usages`
-  ADD CONSTRAINT `usages_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`reservation_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
